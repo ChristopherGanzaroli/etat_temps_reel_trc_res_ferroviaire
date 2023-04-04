@@ -1,0 +1,23 @@
+arrets lignes : 
+https://prim.iledefrance-mobilites.fr/fr/donnees-statiques/arrets-lignes
+arret-lignes.csv : https://data.iledefrance-mobilites.fr/explore/embed/dataset/arrets-lignes/table/
+
+Gares et stations du réseau ferré d'Île-de-France (donnée généralisée) :
+https://prim.iledefrance-mobilites.fr/fr/donnees-statiques/emplacement-des-gares-idf-data-generalisee
+
+Gares et stations du réseau ferré d'Île-de-France (par ligne) : !!
+emplacement-des-gares-id.json : https://prim.iledefrance-mobilites.fr/fr/donnees-statiques/emplacement-des-gares-idf
+
+
+
+Horaires prévus sur les lignes de transport en commun d'Ile-de-France (GTFS Datahub) :
+https://prim.iledefrance-mobilites.fr/fr/donnees-statiques/offre-horaires-tc-gtfs-idfm
+
+
+Prochains passages (plateforme Île-de-France Mobilités) - Requête unitaire : !!!!!
+https://prim.iledefrance-mobilites.fr/fr/donnees-dynamiques/idfm-ivtr-requete_unitaire
+
+Référentiel des lignes de transport en commun d’île-de-France - lignes actives et prochainement actives
+https://data.iledefrance-mobilites.fr/explore/dataset/referentiel-des-lignes/export/?disjunctive.transportmode&disjunctive.transportsubmode&disjunctive.operatorname&disjunctive.networkname
+
+

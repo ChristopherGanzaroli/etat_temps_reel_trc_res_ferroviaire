@@ -1,17 +1,17 @@
-from faker import Faker
 from kafka import KafkaProducer
 import json
 #from data import get_registered_user
 import time
+import requests
 
-fake = Faker()
-
+url = "https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&q=&rows=-1&facet=name&facet=is_installed&facet=is_renting&facet=is_returning&facet=nom_arrondissement_communes"
+r = requests.get(url)
+data = r.json()
+data = data["records"]
 def get_registered_user():
-    return {
-        "name": fake.name(),
-        "address": fake.address(),
-        "created_at": fake.year()
-    }
+
+    for i in range(len(data)):
+        data[i]['fields']['name']
 
 def json_serializer(data):
     return json.dumps(data).encode("utf-8")
