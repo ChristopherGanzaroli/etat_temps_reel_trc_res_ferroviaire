@@ -36,14 +36,14 @@ class GetDataAPI:
             #Affichage du code réponse
         #print('Status:',r)
         #Affichage du contenu de la réponse
-        #print(r.content)
+        return json.loads(r.content)
 
 
 
 ###################################################################################################
 ##   Récupération d'une clé dans un dictionnaire                                                 ##
 ###################################################################################################
-class GetDataFil :
+class GetDataFile :
     def __init__(self, path) :
         self.path = path
 

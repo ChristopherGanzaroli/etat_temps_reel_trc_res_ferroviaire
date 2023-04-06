@@ -1,0 +1,24 @@
+
+                                            DATA
+
+############################################################################################################
+####### Arrêts et lignes associées                                                                   #######
+############################################################################################################
+# url_arrets_stions = "https://data.iledefrance-mobilites.fr/explore/embed/dataset/arrets-lignes/table/"
+# arrets_stations = GetDataAPI(url_arrets_stions).array_data()
+# #print(arrets_stations)
+
+# def match_query(json_file, input_station,input_line) :
+#     for i in range(len(json_file)) :
+#         if (input_station == json_file[i]["fields"]['nom_zdl']) and (input_line == json_file[i]["fields"]['ligne']) :
+#             print(f'STIF:StopArea:SP:{int(json_file[i]["fields"]["id_ref_lda"])}:', f'STIF:Line::{json_file[i]["fields"]["idrefligc"]}')
+#match_query(arrets_ligne,input_station,input_line)
+#print(match_line_code(arrets_ligne, 'route_long_name',input_test))
+
+
+                                    DATACLASSAPI
+def match_param_query_next_pass(self, input_station,input_line) :
+        for i in range(len(self.json_file)) :
+            if (input_station == self.json_file[i]["fields"]['nom_zdl']) and (input_line == self.json_file[i]["fields"]['ligne']) :
+                #return f'STIF%3AStopArea%3ASP%3A{int(self.json_file[i]["fields"]["id_ref_lda"])}%3A', f'LineRef=STIF%3ALine:%3A{self.json_file[i]["fields"]["idrefligc"]}%3A'
+                return f'STIF:StopArea:SP:{int(self.json_file[i]["fields"]["id_ref_lda"])}:', f'LineRef=STIF:Line::{self.json_file[i]["fields"]["idrefligc"]}:'
