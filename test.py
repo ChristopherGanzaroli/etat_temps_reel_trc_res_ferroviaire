@@ -1,14 +1,10 @@
 import sys
 sys.path.append("..")
 from ClassData.DataClassAPI import GetDataFile
+from data.twitter import get_tweets
 
-
-arrets_ligne  = GetDataFile(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\data\api\emplacement-des-gares-idf.csv").csv_file(sep=";")
-
-
-
-print(float(["Geo Point"].str.split(',', expand=True)[0]))
-
+test = get_tweets("RER_A") #RER_A Ligne1_RATP
+print(test)
 
 
 
