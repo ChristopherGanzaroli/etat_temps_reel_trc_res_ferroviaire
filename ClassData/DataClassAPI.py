@@ -1,5 +1,6 @@
 import json
 import requests
+import pandas as pd
 
 class GetDataAPI:
     """
@@ -24,6 +25,7 @@ class GetDataAPI:
         r = requests.get(self.url)
         array_data = r
         return array_data
+
 
 ###################################################################################################
 ##   Récupération les horaires d'arrivéé                                                         ##
@@ -54,6 +56,10 @@ class GetDataFile :
     def iter_(self, key):
         self.json_input()
         return [i[key] for i in self.json_input().iteritems()]
+
+    def csv_file(self, sep):
+        df = pd.read_csv(self.path, sep=sep)
+        return df
 
 
 
