@@ -7,13 +7,18 @@ import sys
 sys.path.append("..")
 from ClassData.DataClassAPI import GetDataFile
 import pandas as pd
+from data.twitter import  get_tweets
+from time import sleep
+import json
+
+
 
 
 arrets_ligne  = GetDataFile(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\data\api\emplacement-des-gares-idf.csv").csv_file(sep=";")
 arrets_ligne["lat"] = pd.to_numeric( arrets_ligne["Geo Point"].str.split(',', expand=True)[0], downcast="float")
 arrets_ligne["lon"] = pd.to_numeric( arrets_ligne["Geo Point"].str.split(',', expand=True)[1], downcast="float")
 
-
+table = get_tweets("RER_A")
 
 
 app = Dash(__name__)
@@ -83,7 +88,7 @@ app.layout = html.Div(style={'background-color': app_colors['background'],
                                                               id='DD_name_ligne_input',
                                                               options=
                                                               [dict(label=x, value=x)
-                                                               for x in arrets_ligne["ligne"]],
+                                                               for x in arrets_ligne["ligne"].unique()],
                                                               placeholder="Selectionnez un arrondissement",
                                                               style = {
                                                                   # 'color': 'white',
@@ -91,12 +96,11 @@ app.layout = html.Div(style={'background-color': app_colors['background'],
                                                               }
 
                                                           ),
-                                                          #html.Label(['Adresse'], style={'font-weight':'bold','font-size': '1rem', 'color':'white'}),
                                                           dcc.Dropdown( #Dropdown adresse
                                                               id='DD_nom_input',
                                                               options=
                                                               [dict(label=x, value=x)
-                                                               for x in arrets_ligne["nom"]],
+                                                               for x in arrets_ligne["nom"].unique()],
                                                               placeholder="Selectionnez une adresse",
                                                               style = {
                                                                   'backgroundColor': 'transparent',
@@ -110,11 +114,10 @@ app.layout = html.Div(style={'background-color': app_colors['background'],
 
                                                   dt.DataTable(
                                                       id='output_datatable',
-                                                      columns=[
-                                                          {'name': 'Date' ,'id' : 'Date', 'type' : 'numeric'},
-                                                          {'name': 'Compte' ,'id' : 'Compte', 'type' : 'text'},
-                                                          {'name': 'Message' ,'id' : 'Message', 'type' : 'text'},
-                                                      ],
+                                                      columns=[{'name': 'Date', 'id': 'Date'},
+                                                               {'name': 'User', 'id': 'User'},
+                                                               {'name': 'Tweet', 'id': 'Tweet'}],
+
                                                       #=df.to_dict('records'),
                                                       page_size=6,
                                                       style_as_list_view=True,
@@ -247,10 +250,35 @@ def update_map_map(DD_name_ligne_input,DD_nom_input) :
         margin={"r":0,"t":0,"l":0,"b":0})
 
     return fig
-"""
-Avec "CALLBACK", nous allons maintenant connecter nos différents composents.
-"""
 
+@app.callback(
+
+    Output('output_datatable', 'data'),
+    Input('DD_name_ligne_input',"value")
+)
+# def update_map_map(DD_name_ligne_input) :
+#     df_feltred = pd.DataFrame(get_tweets("RER_A"))
+#
+#     if   DD_name_ligne_input :
+#     #
+#     #     table_feltred = df_feltred[(df_feltred.ligne==DD_name_ligne_input) ]
+#
+#         print(type(df_feltred))
+#
+#         return df_feltred.to_dict('records')
+def update_map_map(DD_name_ligne_input):
+    df_feltred = pd.DataFrame(get_tweets("RER_A"))
+    if DD_name_ligne_input:
+        data = df_feltred.to_dict('records')
+        print(data[0]['Date'])
+        print(data[0]['User'])
+        print(data[0]['Tweet'])
+        data_json = json.dumps(data, default=str)
+        print(data_json)
+        return data_json[0]
+    # else:
+    #     return []
+    #
 
 
 
