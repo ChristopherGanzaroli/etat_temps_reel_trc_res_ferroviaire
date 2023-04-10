@@ -19,4 +19,4 @@ def get_tweets(username):
 
     df = pd.DataFrame(tweets, columns=['Date', 'User', 'Tweet'])
     print(df)
-get_tweets("Ligne2_RATP") #RER_A
+get_tweets("RER_A") #RER_A Ligne1_RATP
