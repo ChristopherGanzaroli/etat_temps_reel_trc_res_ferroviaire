@@ -19,7 +19,7 @@ arrets_ligne["lat"] = pd.to_numeric( arrets_ligne["Geo Point"].str.split(',', ex
 arrets_ligne["lon"] = pd.to_numeric( arrets_ligne["Geo Point"].str.split(',', expand=True)[1], downcast="float")
 
 table = get_tweets("RER_A")
-
+df_tweets = pd.DataFrame(get_tweets("RER_A")).set_index('Date')
 
 app = Dash(__name__)
 ########################################################################################################################
@@ -73,7 +73,7 @@ app.layout = html.Div(style={'background-color': app_colors['background'],
                                               className='elt_in_left_components',
                                               children=[
                                                   html.H1(
-                                                      "Carte des bornes de recharge à Paris",
+                                                      "Trafic en temps réel du réseau ferroviaire en IDF",
                                                       style={
                                                           'textAlign': 'center',
                                                           'color': app_colors['text'],
@@ -114,11 +114,13 @@ app.layout = html.Div(style={'background-color': app_colors['background'],
 
                                                   dt.DataTable(
                                                       id='output_datatable',
+
+                                                      #[df_tweets.to_dict('records'), [{'Date': i, 'User': i,'User': i}, for i in indf_tweets ],#[{'Date': i, 'User': i,'User': i}]
                                                       columns=[{'name': 'Date', 'id': 'Date'},
-                                                               {'name': 'User', 'id': 'User'},
+                                                               #{'name': 'User', 'id': 'User'},
                                                                {'name': 'Tweet', 'id': 'Tweet'}],
 
-                                                      #=df.to_dict('records'),
+
                                                       page_size=6,
                                                       style_as_list_view=True,
                                                       style_data={
@@ -267,18 +269,21 @@ def update_map_map(DD_name_ligne_input,DD_nom_input) :
 #
 #         return df_feltred.to_dict('records')
 def update_map_map(DD_name_ligne_input):
-    df_feltred = pd.DataFrame(get_tweets("RER_A"))
+    df_feltred = pd.DataFrame(get_tweets("RER_A")).set_index('Date')
     if DD_name_ligne_input:
-        data = df_feltred.to_dict('records')
-        print(data[0]['Date'])
-        print(data[0]['User'])
-        print(data[0]['Tweet'])
-        data_json = json.dumps(data, default=str)
-        print(data_json)
-        return data_json[0]
-    # else:
-    #     return []
-    #
+        data1 = df_feltred
+        data1.to_csv("df_feltred.csv")
+        data2 = pd.read_csv("df_feltred.csv", sep=",")
+
+        #data2 = df_feltred.to_dict('records')
+
+
+    # print(data[0]['Date'])
+        # print(data[0]['User'])
+        # print(data[0]['Tweet'])
+        # data_json = json.dumps(data, default=str)
+        # print(len(data2))
+        return data2.to_dict('records')
 
 
 
