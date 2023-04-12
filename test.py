@@ -1,11 +1,24 @@
 import sys
 sys.path.append("..")
+import pandas as pd
+import json
 from ClassData.DataClassAPI import GetDataFile
 from data.twitter import get_tweets
 
-test = get_tweets("RER_A") #RER_A Ligne1_RATP
-print(test)
+df_feltred = pd.DataFrame(get_tweets("RER_A"))
+dt = df_feltred.to_dict('records')
+print(dt[0])
 
+
+#print(data.to_dict('records'))
+
+# for i in range(len(data)) :
+#
+#     d = {
+#     'Date':data.Date[i],
+#     'User' : data.User[i],
+#     'Tweet':data.Tweet[i]}
+#     print(d)
 
 
 

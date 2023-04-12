@@ -7,7 +7,7 @@ start_date = datetime.datetime.now()
 def get_tweets(username):
     query = f"(from:{username}), since:{start_date:%Y-%m-%d} lang:fr" #until:2023-09-04 since:2023-09-03"
     tweets = []
-    limit = 2
+    limit = 3
     for tweet in sntwitter.TwitterSearchScraper(query).get_items():
 
         # print(vars(tweet))
