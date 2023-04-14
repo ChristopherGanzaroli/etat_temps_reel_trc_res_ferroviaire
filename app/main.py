@@ -1,25 +1,20 @@
-import plotly.express as px
-from dash import Dash, html, dcc, dash_table
+from dash import Dash, html, dcc
 import plotly.express as px
 from dash.dependencies import Input, Output
 from dash import dash_table as dt
+#from dash.exceptions import PreventUpdate
 import sys
 sys.path.append("..")
 from ClassData.DataClassAPI import GetDataFile
 import pandas as pd
-from data.twitter import  get_tweets
-from time import sleep
-import json
-
-
-
+from ClassData.twitter import  GetTweet
 
 arrets_ligne  = GetDataFile(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\data\api\emplacement-des-gares-idf.csv").csv_file(sep=";")
 arrets_ligne["lat"] = pd.to_numeric( arrets_ligne["Geo Point"].str.split(',', expand=True)[0], downcast="float")
 arrets_ligne["lon"] = pd.to_numeric( arrets_ligne["Geo Point"].str.split(',', expand=True)[1], downcast="float")
 
-table = get_tweets("RER_A")
-df_tweets = pd.DataFrame(get_tweets("RER_A")).set_index('Date')
+# table = get_tweets("RER_A")
+# df_tweets = pd.DataFrame(get_tweets("RER_A")).set_index('Date')
 
 app = Dash(__name__)
 ########################################################################################################################
@@ -89,7 +84,7 @@ app.layout = html.Div(style={'background-color': app_colors['background'],
                                                               options=
                                                               [dict(label=x, value=x)
                                                                for x in arrets_ligne["ligne"].unique()],
-                                                              placeholder="Selectionnez un arrondissement",
+                                                              placeholder="Selectionnez une ligne",
                                                               style = {
                                                                   # 'color': 'white',
                                                                   'backgroundColor': 'transparent',
@@ -97,11 +92,11 @@ app.layout = html.Div(style={'background-color': app_colors['background'],
 
                                                           ),
                                                           dcc.Dropdown( #Dropdown adresse
-                                                              id='DD_nom_input',
+                                                              id='DD_name_station_input',
                                                               options=
                                                               [dict(label=x, value=x)
                                                                for x in arrets_ligne["nom"].unique()],
-                                                              placeholder="Selectionnez une adresse",
+                                                              placeholder="Selectionnez une station",
                                                               style = {
                                                                   'backgroundColor': 'transparent',
 
@@ -218,9 +213,9 @@ app.layout = html.Div(style={'background-color': app_colors['background'],
     Output('map_output', 'figure'),
 
     Input('DD_name_ligne_input',"value"),
-    Input('DD_nom_input',"value")
+    Input('DD_name_station_input',"value")
 )
-def update_map_map(DD_name_ligne_input,DD_nom_input) :
+def update_map_map(DD_name_ligne_input,DD_name_station_input) :
     map_feltred = arrets_ligne.copy()
 
     # if  not DD_dept_input :
@@ -231,8 +226,8 @@ def update_map_map(DD_name_ligne_input,DD_nom_input) :
 
 
 
-    elif DD_nom_input:
-        map_feltred = map_feltred[(map_feltred.nom==DD_nom_input)]
+    elif DD_name_station_input:
+        map_feltred = map_feltred[(map_feltred.nom==DD_name_station_input)]
 
 
     ######################################## MAP ###############################################
@@ -258,31 +253,28 @@ def update_map_map(DD_name_ligne_input,DD_nom_input) :
     Output('output_datatable', 'data'),
     Input('DD_name_ligne_input',"value")
 )
-# def update_map_map(DD_name_ligne_input) :
-#     df_feltred = pd.DataFrame(get_tweets("RER_A"))
-#
-#     if   DD_name_ligne_input :
-#     #
-#     #     table_feltred = df_feltred[(df_feltred.ligne==DD_name_ligne_input) ]
-#
-#         print(type(df_feltred))
-#
-#         return df_feltred.to_dict('records')
-def update_map_map(DD_name_ligne_input):
-    df_feltred = pd.DataFrame(get_tweets("RER_A")).set_index('Date')
+
+def get_tweet(DD_name_ligne_input):
+    # if not DD_name_ligne_input :
+    #     raise PreventUpdate
+    # else :
+
+    #df_feltred = pd.DataFrame(get_tweets(DD_name_ligne_input)).set_index('Date')
+    #definir en fonction match_patern
+    # if len(df_feltred) < 1 :
+    #     df_feltred = pd.DataFrame(get_tweets(DD_name_ligne_input).replace(" ","_")).set_index('Date')
+    #
+    #     if len(df_feltred) < 1 :
+    #         df_feltred = pd.DataFrame(get_tweets(DD_name_ligne_input).replace(" ","_")).set_index('Date')
+
     if DD_name_ligne_input:
+
+        df_feltred = GetTweet(DD_name_ligne_input).get_tweets()
         data1 = df_feltred
-        data1.to_csv("df_feltred.csv")
-        data2 = pd.read_csv("df_feltred.csv", sep=",")
+        data1.to_csv("df_feltred.csv", encoding="UTF-8")
+        data2 = pd.read_csv("df_feltred.csv", sep=",", encoding="UTF-8")
+        print(data2)
 
-        #data2 = df_feltred.to_dict('records')
-
-
-    # print(data[0]['Date'])
-        # print(data[0]['User'])
-        # print(data[0]['Tweet'])
-        # data_json = json.dumps(data, default=str)
-        # print(len(data2))
         return data2.to_dict('records')
 
 
