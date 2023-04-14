@@ -1,13 +1,55 @@
 import sys
 sys.path.append("..")
-import pandas as pd
-import json
-from ClassData.DataClassAPI import GetDataFile
-from data.twitter import get_tweets
+from ClassData.twitter import GetTweet #get_tweets
 
-df_feltred = pd.DataFrame(get_tweets("RER_A"))
-dt = df_feltred.to_dict('records')
-print(dt[0])
+ligne = GetTweet("RER A").get_tweets()
+print(ligne)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def match_patern_twitter_account_name(ligne) :
+#
+#     if "RER A" in ligne :
+#         ligne = ligne.replace(" ", "_")
+#
+#     elif "RER B" in ligne :
+#         ligne = ligne.replace(" ","")
+#
+#     elif ("RER C") or ("RER D") in ligne :
+#         ligne = ligne.replace(f"RER {ligne[4]}",f"RER{ligne[4]}_SNCF")
+#
+#     elif "METRO" in ligne :
+#         ligne = ligne.replace(f"METRO {ligne[6]}",f"Ligne{ligne[6]}_RATP")
+#
+#     if  ligne in ["TRAIN L", "TRAIN P", "TRAIN H","TRAIN R","TRAIN J", "TRAIN K"]  :
+#         ligne = ligne.replace(f"TRAIN {ligne[6]}",f"Ligne{ligne[6]}_SNCF")
+#
+#     if ligne in ["TRAIN N", "TRAIN U"] :
+#         ligne = ligne.replace(f"TRAIN {ligne[6]}",f"LignesNetU_SNCF")
+#
+#     return ligne
+
+
+
+
+
+
+# df_feltred = pd.DataFrame(get_tweets(match_patern_twitter_account_name(ligne)))
+# #dt = df_feltred.to_dict('records')
+# print(df_feltred)
 
 
 #print(data.to_dict('records'))
