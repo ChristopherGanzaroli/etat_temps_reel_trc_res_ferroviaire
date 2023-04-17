@@ -1,0 +1,14 @@
+trip_id;arrival_time;departure_time;stop_id;stop_sequence;pickup_type;drop_off_type;local_zone_id;stop_headsign;timepoint
+IDFM:TN:SNCF:e818880b-690c-4989-8c2c-cc38d7fc231e;20:25:10;20:25:10;IDFM:monomodalStopPlace:43166;5;0;1;;;1
+IDFM:TN:SNCF:e818880b-690c-4989-8c2c-cc38d7fc231e;20:28:40;20:29:20;IDFM:monomodalStopPlace:43126;6;0;0;;;1
+IDFM:TN:SNCF:e818880b-690c-4989-8c2c-cc38d7fc231e;20:31:20;20:32:00;IDFM:monomodalStopPlace:43105;7;0;0;;;1
+IDFM:TN:SNCF:e818880b-690c-4989-8c2c-cc38d7fc231e;20:33:50;20:34:50;IDFM:monomodalStopPlace:47898;8;0;0;;;1
+IDFM:TN:SNCF:e818880b-690c-4989-8c2c-cc38d7fc231e;20:38:00;20:38:40;IDFM:monomodalStopPlace:43201;9;0;0;;;1
+IDFM:TN:SNCF:e818880b-690c-4989-8c2c-cc38d7fc231e;20:40:40;20:41:20;IDFM:monomodalStopPlace:43077;10;0;0;;;1
+IDFM:TN:SNCF:e818880b-690c-4989-8c2c-cc38d7fc231e;20:43:50;20:44:30;IDFM:monomodalStopPlace:43130;11;0;0;;;1
+IDFM:TN:SNCF:e818880b-690c-4989-8c2c-cc38d7fc231e;20:46:20;20:47:00;IDFM:monomodalStopPlace:43230;12;0;0;;;1
+IDFM:TN:SNCF:e818880b-690c-4989-8c2c-cc38d7fc231e;20:50:00;20:51:00;IDFM:monomodalStopPlace:43203;13;0;0;;;1
+IDFM:TN:SNCF:e818880b-690c-4989-8c2c-cc38d7fc231e;20:53:30;20:54:20;IDFM:monomodalStopPlace:44514;14;0;0;;;1
+IDFM:TN:SNCF:e818880b-690c-4989-8c2c-cc38d7fc231e;20:56:50;20:57:40;IDFM:monomodalStopPlace:44314;15;0;0;;;1
+IDFM:TN:SNCF:e818880b-690c-4989-8c2c-cc38d7fc231e;20:59:40;21:00:40;IDFM:monomodalStopPlace:415093;16;0;0;;;1
+IDFM:TN:SNCF:e818880b-690c-4989-8c2c-cc38d7fc231e;21:03:10;21:03:50;IDFM:monomodalStopPlace:45437;17;0;0;;;1

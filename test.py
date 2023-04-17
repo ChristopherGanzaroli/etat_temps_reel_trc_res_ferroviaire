@@ -1,9 +1,49 @@
 import sys
 sys.path.append("..")
 from ClassData.twitter import GetTweet #get_tweets
+from ClassData.DataClassAPI import GetDataFile, GetDataAPI
+from ClassData.ApiResquest import NextPass
+import pandas as pd
+import json
+import requests
 
-ligne = GetTweet("RER A").get_tweets()
-print(ligne)
+#
+#
+# arrets_ligne  = GetDataFile(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\data\api\emplacement-des-gares-idf.csv").csv_file(sep=";")
+# arrets_ligne["lat"] = arrets_ligne["Geo Point"].str.split(',', expand=True)[0]
+# arrets_ligne["lon"] = arrets_ligne["Geo Point"].str.split(',', expand=True)[1]
+#
+# df_horaire = GetDataFile(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\data\api\test_stop_times.csv").csv_file(sep=";")
+# # print(arrets_ligne["Geo Point"].str.split(',', expand=True)[1])
+
+input_station = "Montigny - Beauchamp" #input("Entrer station ") #Ch\u00e2telet - Les Halles
+input_line = "RER C"#input("Entrer station ") #RER A
+
+input_station = "Cité Universitaire" #input("Entrer station ") #Ch\u00e2telet - Les Halles
+input_line = "RER B"#input("Entrer station ") #RER A
+
+
+
+test = NextPass(input_station,input_line).next_pass()
+
+"""
+ID commun
+NexPass : 'id_ref_zdl': 43166
+stop_times[stop_id] = IDFM:monomodalStopPlace:43166
+
+"""
+#Destination
+#print(test[list(test.keys())[0]]["ServiceDelivery"]["StopMonitoringDelivery"][0]["MonitoredStopVisit"][1]["MonitoredVehicleJourney"]['DestinationName'])
+#Horaire
+print(test[list(test.keys())[0]]["ServiceDelivery"]["StopMonitoringDelivery"][0]["MonitoredStopVisit"][10]["MonitoredVehicleJourney"]["MonitoredCall"])
+
+
+
+
+
+#
+# ligne = GetTweet("METRO 2").get_tweets()
+# print(ligne)
 
 
 
