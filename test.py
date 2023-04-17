@@ -8,6 +8,7 @@ import json
 import requests
 import dateutil
 from  datetime import datetime
+import datetime as dt
 import pendulum
 
 
@@ -60,9 +61,9 @@ stop_times[stop_id] = IDFM:monomodalStopPlace:43166
 #print(df.ExpectedArrivalTime.map(lambda d : dateutil.parser.parse(d).date())) #date
 #print(df.ExpectedDepartureTime.map(lambda d : dateutil.parser.parse(d).time()))
 
-
+#
 # def info():
-#     next_pass_info = NextPass(input_station,input_line).next_pass()
+#     next_pass_info = NextPass(input_station,input_line).url_res()
 #
 #     #get api info
 #     l = []
@@ -81,7 +82,9 @@ stop_times[stop_id] = IDFM:monomodalStopPlace:43166
 #     #Clean df
 #     df.StopPointName = df.StopPointName.map(lambda v:  "".join(v[0].values()))
 #     df.DestinationDisplay = df.DestinationDisplay.map(lambda v:  "".join(v[0].values()))
-#     df.ExpectedArrivalTime = df.ExpectedArrivalTime.map(lambda d : dateutil.parser.parse(d).time()) #time
+#     df.ExpectedArrivalTime = df.ExpectedArrivalTime.map(lambda d : f'{dateutil.parser.parse(d).time().hour+2}:{dateutil.parser.parse(d).time().minute}:{dateutil.parser.parse(d).time().second}') #time
+#     #print(df.ExpectedArrivalTime.map(lambda d :  dt.timedelta(hours=d.hour+2)))
+#     #print(df.ExpectedArrivalTime.map(lambda d :  f'{d.hour+2}:{d.minute}:{d.second}'))
 #     #print(df.ExpectedArrivalTime.map(lambda d : dateutil.parser.parse(d).date())) #date
 #     df.ExpectedDepartureTime = df.ExpectedDepartureTime.map(lambda d : dateutil.parser.parse(d).time())
 #
