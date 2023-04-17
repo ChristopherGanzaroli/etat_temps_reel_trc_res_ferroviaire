@@ -10,11 +10,10 @@ import pandas as pd
 from ClassData.twitter import  GetTweet
 
 arrets_ligne  = GetDataFile(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\data\api\emplacement-des-gares-idf.csv").csv_file(sep=";")
-arrets_ligne["lat"] = pd.to_numeric( arrets_ligne["Geo Point"].str.split(',', expand=True)[0], downcast="float")
-arrets_ligne["lon"] = pd.to_numeric( arrets_ligne["Geo Point"].str.split(',', expand=True)[1], downcast="float")
-
-# table = get_tweets("RER_A")
-# df_tweets = pd.DataFrame(get_tweets("RER_A")).set_index('Date')
+# arrets_ligne["lat"] = pd.to_numeric( arrets_ligne["Geo Point"].str.split(',', expand=True)[0], downcast="float")
+# arrets_ligne["lon"] = pd.to_numeric( arrets_ligne["Geo Point"].str.split(',', expand=True)[1], downcast="float")
+arrets_ligne["lat"] = arrets_ligne["Geo Point"].str.split(',', expand=True)[0].astype(float)
+arrets_ligne["lon"] = arrets_ligne["Geo Point"].str.split(',', expand=True)[1].astype(float)
 
 app = Dash(__name__)
 ########################################################################################################################
@@ -106,7 +105,55 @@ app.layout = html.Div(style={'background-color': app_colors['background'],
                                                           ),
                                                       ]
                                                   ),
+                                                  html.Div(
+                                                      className='Info_div',
+                                                      children=[
+                                                          html.H1("Info trafic"),
+                                                          dt.DataTable(
+                                                              id='output_datatable2',
 
+                                                              #[df_tweets.to_dict('records'), [{'Date': i, 'User': i,'User': i}, for i in indf_tweets ],#[{'Date': i, 'User': i,'User': i}]
+                                                              columns=[{'name': 'Horaire prevu', 'id': 'Horaire_prevu'},
+                                                                       {'name': 'Horaire estimé', 'id': 'Horaire_estime'},
+                                                                       {'name': 'Retard', 'id': 'Tweet'}],
+
+
+                                                              page_size=6,
+                                                              style_as_list_view=True,
+                                                              style_data={
+                                                                  #'width':'50px',
+                                                                  'overflow':'hidden',
+                                                                  'textOverflow' : 'ellipsis',
+                                                                  'color': 'white',
+                                                                  'backgroundColor': 'transparent',
+                                                                  'whiteSpace': 'normal',
+                                                                  'width': 'auto',
+
+                                                              },
+                                                              style_table={
+                                                                  'overflowX': 'auto'
+                                                              },
+                                                              style_cell={
+                                                                  'overflow': 'hidden',
+                                                                  'textOverflow': 'ellipsis',
+                                                                  'textAlign': 'left',
+
+                                                              },
+                                                              style_header={
+                                                                  'backgroundColor': 'rgb(50, 50, 50)',
+                                                                  'color': 'white',
+                                                                  'fontWeight': 'bold',
+                                                                  'border': '1px solid black'
+                                                              },
+                                                              style_cell_conditional=[
+                                                                  {'if': {'column_id': 'code_insee_commune'},
+                                                                   'width': '5%'}
+                                                              ]
+
+                                                          )
+                                                      ]
+
+                                                  ),
                                                   dt.DataTable(
                                                       id='output_datatable',
 
@@ -212,8 +259,8 @@ app.layout = html.Div(style={'background-color': app_colors['background'],
 @app.callback(
     Output('map_output', 'figure'),
 
-    Input('DD_name_ligne_input',"value"),
-    Input('DD_name_station_input',"value")
+    Input('DD_name_ligne_input',component_property="value"),
+    Input('DD_name_station_input',component_property="value")
 )
 def update_map_map(DD_name_ligne_input,DD_name_station_input) :
     map_feltred = arrets_ligne.copy()
@@ -223,6 +270,7 @@ def update_map_map(DD_name_ligne_input,DD_name_station_input) :
     # else :
     if DD_name_ligne_input :
         map_feltred = map_feltred[map_feltred.ligne == DD_name_ligne_input]
+        #print(DD_name_ligne_input, map_feltred.lat, map_feltred.lon)
 
 
 
@@ -232,9 +280,10 @@ def update_map_map(DD_name_ligne_input,DD_name_station_input) :
 
     ######################################## MAP ###############################################
     px.set_mapbox_access_token(open(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\app\mapbox_token.txt").read())
-    fig = px.scatter_mapbox(map_feltred, lat='lat', lon='lon',
+    fig = px.scatter_mapbox(map_feltred, lat=map_feltred.lat, lon=map_feltred.lon,
                             mapbox_style='carto-darkmatter',
                             hover_data=['ligne','nom'], color="ligne",
+
                             color_continuous_scale=px.colors.cyclical.IceFire, size_max=12, zoom=11.2)
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0,})
 
@@ -273,7 +322,7 @@ def get_tweet(DD_name_ligne_input):
         data1 = df_feltred
         data1.to_csv("df_feltred.csv", encoding="UTF-8")
         data2 = pd.read_csv("df_feltred.csv", sep=",", encoding="UTF-8")
-        print(data2)
+        #print(data2)
 
         return data2.to_dict('records')
 

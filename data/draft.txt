@@ -22,3 +22,33 @@ def match_param_query_next_pass(self, input_station,input_line) :
             if (input_station == self.json_file[i]["fields"]['nom_zdl']) and (input_line == self.json_file[i]["fields"]['ligne']) :
                 #return f'STIF%3AStopArea%3ASP%3A{int(self.json_file[i]["fields"]["id_ref_lda"])}%3A', f'LineRef=STIF%3ALine:%3A{self.json_file[i]["fields"]["idrefligc"]}%3A'
                 return f'STIF:StopArea:SP:{int(self.json_file[i]["fields"]["id_ref_lda"])}:', f'LineRef=STIF:Line::{self.json_file[i]["fields"]["idrefligc"]}:'
+
+
+
+                                    APIREQUEST
+
+class CallDataRest :
+
+    global headers
+    headers= {'Accept': 'application/json', 'apikey': 'ZTckQPr4yBB7roJMCMBbQLS9OKmXbW9P'}
+    def __init__(self,json_file ):
+        self.json_file = json_file
+
+
+    def next_pass(self):
+        r = requests.get(self.url, headers=headers)
+        #Affichage du code réponse
+        #print('Status:',r)
+        #Affichage du contenu de la réponse
+        return json.loads(r.content)
+
+
+    def input_query(self, input_station,input_line) : #recherche les id ligne et station dans emplacement-des-gares-idf.json
+        for i in range(len(self.json_file)) :
+            if (input_station == self.json_file[i]["fields"]['nom_zdl']) and (input_line == self.json_file[i]["fields"]['ligne']) :
+                return f'STIF:StopArea:SP:{int(self.json_file[i]["fields"]["id_ref_lda"])}:', f'LineRef=STIF:Line::{self.json_file[i]["fields"]["idrefligc"]}:'
+    def client_next_pass(self) :
+        param_next_pass = self.input_query #CallDataRest(arrets_ligne).match_param_query_next_pass(input_station,input_line)
+        next_pass_url = f"https://prim.iledefrance-mobilites.fr/marketplace/stop-monitoring?MonitoringRef={param_next_pass[0]}&{param_next_pass[1]}"
+        print(param_next_pass[0],param_next_pass[1])
+        return GetDataAPI(next_pass_url).next_pass()
