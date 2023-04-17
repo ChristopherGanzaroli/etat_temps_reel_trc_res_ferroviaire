@@ -6,6 +6,7 @@ from dash import dash_table as dt
 import sys
 sys.path.append("..")
 from ClassData.DataClassAPI import GetDataFile
+from ClassData.ApiResquest import NextPass
 import pandas as pd
 from ClassData.twitter import  GetTweet
 
@@ -110,12 +111,12 @@ app.layout = html.Div(style={'background-color': app_colors['background'],
                                                       children=[
                                                           html.H1("Info trafic"),
                                                           dt.DataTable(
-                                                              id='output_datatable2',
+                                                              id='next_pass_table_output',
 
                                                               #[df_tweets.to_dict('records'), [{'Date': i, 'User': i,'User': i}, for i in indf_tweets ],#[{'Date': i, 'User': i,'User': i}]
-                                                              columns=[{'name': 'Horaire prevu', 'id': 'Horaire_prevu'},
-                                                                       {'name': 'Horaire estimé', 'id': 'Horaire_estime'},
-                                                                       {'name': 'Retard', 'id': 'Tweet'}],
+                                                              columns=[{'name': 'Destination', 'id': 'DestinationDisplay'},
+                                                                       {'name': 'Prochain passage', 'id': 'ExpectedArrivalTime'},
+                                                                       {'name': 'Depart', 'id': 'ExpectedDepartureTime'}],
 
 
                                                               page_size=6,
@@ -296,7 +297,26 @@ def update_map_map(DD_name_ligne_input,DD_name_station_input) :
         margin={"r":0,"t":0,"l":0,"b":0})
 
     return fig
+###################################################################################################"
 
+@app.callback(
+
+    Output('next_pass_table_output', 'data'),
+    Input('DD_name_station_input',"value"),
+    Input('DD_name_ligne_input',"value")
+)
+
+def get_tweet(DD_name_station_input,DD_name_ligne_input):
+
+    if DD_name_station_input and DD_name_ligne_input:
+
+        df = NextPass(DD_name_station_input,DD_name_ligne_input).next_pass()
+        df_feltred = df.drop_duplicates(subset=['DestinationDisplay'])
+
+        #print(data2)
+
+        return df_feltred.to_dict('records')
+###################################################################################################"
 @app.callback(
 
     Output('output_datatable', 'data'),
@@ -304,24 +324,13 @@ def update_map_map(DD_name_ligne_input,DD_name_station_input) :
 )
 
 def get_tweet(DD_name_ligne_input):
-    # if not DD_name_ligne_input :
-    #     raise PreventUpdate
-    # else :
-
-    #df_feltred = pd.DataFrame(get_tweets(DD_name_ligne_input)).set_index('Date')
-    #definir en fonction match_patern
-    # if len(df_feltred) < 1 :
-    #     df_feltred = pd.DataFrame(get_tweets(DD_name_ligne_input).replace(" ","_")).set_index('Date')
-    #
-    #     if len(df_feltred) < 1 :
-    #         df_feltred = pd.DataFrame(get_tweets(DD_name_ligne_input).replace(" ","_")).set_index('Date')
 
     if DD_name_ligne_input:
 
         df_feltred = GetTweet(DD_name_ligne_input).get_tweets()
         data1 = df_feltred
-        data1.to_csv("df_feltred.csv", encoding="UTF-8")
-        data2 = pd.read_csv("df_feltred.csv", sep=",", encoding="UTF-8")
+        data1.to_csv("df_tweets.csv", encoding="UTF-8")
+        data2 = pd.read_csv("df_tweets.csv", sep=",", encoding="UTF-8")
         #print(data2)
 
         return data2.to_dict('records')
