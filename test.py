@@ -21,20 +21,22 @@ import pendulum
 # df_horaire = GetDataFile(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\data\api\test_stop_times.csv").csv_file(sep=";")
 # # print(arrets_ligne["Geo Point"].str.split(',', expand=True)[1])
 
-input_station = "Vincennes" #input("Entrer station ") #Ch\u00e2telet - Les Halles
-input_line = "RER A"#input("Entrer station ") #RER A
+# input_station = "Vincennes" #input("Entrer station ") #Ch\u00e2telet - Les Halles
+# input_line = "RER A"#input("Entrer station ") #RER A
 
-# input_station = "Houilles-Carrières-sur-Seine" #input("Entrer station ") #Ch\u00e2telet - Les Halles
-# input_line = "TRAIN L"#input("Entrer station ") #RER A
+input_station = "Houilles-Carrières-sur-Seine" #input("Entrer station ") #Ch\u00e2telet - Les Halles
+input_line = "TRAIN L"#input("Entrer station ") #RER A
 
 station_file = GetDataFile(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\data\api\emplacement-des-gares-idf.json").json_input()
-print(station_file)
+# for i in range(len(station_file)):
+#     if input_station == station_file[i]["fields"]["nom_iv"] :
+#         print(station_file[i]["fields"]["nom_zdl"])
 
 
 
 # #
-# test = NextPass(input_station,input_line).next_pass()
-# print(test)
+test = NextPass(input_station,input_line).next_pass()
+print(test)
 
 
 
