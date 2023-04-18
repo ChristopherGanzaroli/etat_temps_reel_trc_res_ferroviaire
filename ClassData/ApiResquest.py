@@ -22,7 +22,7 @@ class NextPass :
 
     def url_param(self) : #recherche les id ligne et station dans emplacement-des-gares-idf.json
         for i in range(len(arrets_ligne)) :
-            if (self.input_station == arrets_ligne[i]["fields"]['nom_zdl']) and (self.input_line == arrets_ligne[i]["fields"]['ligne']) :
+            if ((self.input_station == arrets_ligne[i]["fields"]['nom_zdl']) or (self.input_station == arrets_ligne[i]["fields"]['nom_iv'])) and (self.input_line == arrets_ligne[i]["fields"]['ligne']) :
                 return f'STIF:StopArea:SP:{int(arrets_ligne[i]["fields"]["id_ref_lda"])}:', f'LineRef=STIF:Line::{arrets_ligne[i]["fields"]["idrefligc"]}:'
 
     def url_res(self) :
