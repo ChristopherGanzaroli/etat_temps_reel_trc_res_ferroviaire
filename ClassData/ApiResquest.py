@@ -27,8 +27,9 @@ class NextPass :
 
     def url_res(self) :
         param = self.url_param() #CallDataRest(arrets_ligne).match_param_query_next_pass(input_station,input_line)
-        url = f"https://prim.iledefrance-mobilites.fr/marketplace/stop-monitoring?MonitoringRef={param[0]}&{param[1]}"
         print(param[0],param[1])
+        url = f"https://prim.iledefrance-mobilites.fr/marketplace/stop-monitoring?MonitoringRef={param[0]}&{param[1]}"
+
         return self.res(url)
 
     def next_pass(self):
