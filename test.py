@@ -24,13 +24,21 @@ import pendulum
 input_station = "Vincennes" #input("Entrer station ") #Ch\u00e2telet - Les Halles
 input_line = "RER A"#input("Entrer station ") #RER A
 
-input_station = "Cité Universitaire" #input("Entrer station ") #Ch\u00e2telet - Les Halles
-input_line = "RER B"#input("Entrer station ") #RER A
+# input_station = "Houilles-Carrières-sur-Seine" #input("Entrer station ") #Ch\u00e2telet - Les Halles
+# input_line = "TRAIN L"#input("Entrer station ") #RER A
+
+station_file = GetDataFile(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\data\api\emplacement-des-gares-idf.json").json_input()
+print(station_file)
 
 
 
-test = NextPass(input_station,input_line).next_pass()
-print(test)
+# #
+# test = NextPass(input_station,input_line).next_pass()
+# print(test)
+
+
+
+
 """
 ID commun
 NexPass : 'id_ref_zdl': 43166
