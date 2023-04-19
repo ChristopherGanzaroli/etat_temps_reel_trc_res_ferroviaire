@@ -39,8 +39,7 @@ class NextPass :
         l = []
         for i in range(len(next_pass_info[list(next_pass_info.keys())[0]]["ServiceDelivery"]["StopMonitoringDelivery"][0]["MonitoredStopVisit"])) :
             api_info_filtered = next_pass_info[list(next_pass_info.keys())[0]]["ServiceDelivery"]["StopMonitoringDelivery"][0]["MonitoredStopVisit"][i]["MonitoredVehicleJourney"]["MonitoredCall"]
-            if api_info_filtered["VehicleAtStop"] ==True : # Pour éviter les "Nan" dans "ExpectedDepartureTime" (bloque la methode parse)
-                l.append(api_info_filtered)
+            l.append(api_info_filtered)
 
         #api_info to pd.df
         # l2 = []
@@ -48,16 +47,17 @@ class NextPass :
         #     if j["VehicleAtStop"] == True :
         #         print(j)
         #         l2.append(j.values())
-
+        #print(l)
         df = pd.DataFrame(l, columns=['StopPointName', 'VehicleAtStop', 'DestinationDisplay', 'ExpectedArrivalTime', 'ExpectedDepartureTime', 'DepartureStatus', 'ArrivalStatus'])
-
+        df.dropna(subset=['ExpectedArrivalTime', 'ExpectedDepartureTime'], inplace=True)
 
         #Clean df
         df.StopPointName = df.StopPointName.map(lambda v:  "".join(v[0].values()))
         df.DestinationDisplay = df.DestinationDisplay.map(lambda v:  "".join(v[0].values()))
-        df.ExpectedArrivalTime = df.ExpectedArrivalTime.map(lambda d : f'{dateutil.parser.parse(d).time().hour+2}:{dateutil.parser.parse(d).time().minute}:{dateutil.parser.parse(d).time().second}') #time
+
+        #df.ExpectedArrivalTime = df.ExpectedArrivalTime.map(lambda d : f'{dateutil.parser.parse(d).time().hour+2}:{dateutil.parser.parse(d).time().minute}:{dateutil.parser.parse(d).time().second}') #time
         #print(df.ExpectedArrivalTime.map(lambda d : dateutil.parser.parse(d).date())) #date
-        df.ExpectedDepartureTime = df.ExpectedDepartureTime.map(lambda d : f'{dateutil.parser.parse(d).time().hour+2}:{dateutil.parser.parse(d).time().minute}:{dateutil.parser.parse(d).time().second}') #time
+        #df.ExpectedDepartureTime = df.ExpectedDepartureTime.map(lambda d : f'{dateutil.parser.parse(d).time().hour+2}:{dateutil.parser.parse(d).time().minute}:{dateutil.parser.parse(d).time().second}') #time
 
 
         return df
