@@ -12,34 +12,137 @@ import datetime as dt
 import pendulum
 
 
-#
-#
-# arrets_ligne  = GetDataFile(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\data\api\emplacement-des-gares-idf.csv").csv_file(sep=";")
-# arrets_ligne["lat"] = arrets_ligne["Geo Point"].str.split(',', expand=True)[0]
-# arrets_ligne["lon"] = arrets_ligne["Geo Point"].str.split(',', expand=True)[1]
-#
-# df_horaire = GetDataFile(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\data\api\test_stop_times.csv").csv_file(sep=";")
-# # print(arrets_ligne["Geo Point"].str.split(',', expand=True)[1])
 
-# input_station = "Vincennes" #input("Entrer station ") #Ch\u00e2telet - Les Halles
-# input_line = "RER A"#input("Entrer station ") #RER A
 
-input_station = "Houilles-Carrières-sur-Seine" #input("Entrer station ") #Ch\u00e2telet - Les Halles
-input_line = "TRAIN L"#input("Entrer station ") #RER A
 
+#########################################################################################################################################
+## [TEST]
+## NEXT_PASS
+#########################################################################################################################################
+df_horaire = GetDataFile(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\data\api\test_stop_times.csv").csv_file(sep=";")
 station_file = GetDataFile(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\data\api\emplacement-des-gares-idf.json").json_input()
+
+# print(arrets_ligne["Geo Point"].str.split(',', expand=True)[1])
+
+input_station = "Vincennes" #input("Entrer station ") #Ch\u00e2telet - Les Halles
+input_line = "RER A"#input("Entrer station ") #RER A
+
+input_station =  "Esbly"   #"Houilles-Carrières-sur-Seine" #input("Entrer station ") #Ch\u00e2telet - Les Halles
+input_line =   "TRAIN P"     #"TRAIN L"#input("Entrer station ") #RER A
+
 # for i in range(len(station_file)):
 #     if input_station == station_file[i]["fields"]["nom_iv"] :
 #         print(station_file[i]["fields"]["nom_zdl"])
-
-
-
-# #
 test = NextPass(input_station,input_line).next_pass()
 print(test)
 
 
 
+
+#########################################################################################################################################
+## [TEST]
+## MAIN <- MAP
+#########################################################################################################################################
+
+# arrets_ligne  = pd.DataFrame(GetDataFile(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\data\api\emplacement-des-gares-idf.csv").csv_file(sep=";"))
+# arrets_ligne["lat"] = arrets_ligne["Geo Point"].str.split(',', expand=True)[0].astype(float)
+# arrets_ligne["lon"] = arrets_ligne["Geo Point"].str.split(',', expand=True)[1].astype(float)
+# input_station = "Houilles-Carrières-sur-Seine" #input("Entrer station ") #Ch\u00e2telet - Les Halles
+# input_line = "TRAIN L"#input("Entrer station ") #RER A
+# import plotly.express as px
+# import dash
+# from dash import Dash, dcc, html, Input, Output
+# import plotly.io as pio
+# import plotly.graph_objects as go
+#
+# pio.templates.default = "plotly_dark"
+#
+# px.set_mapbox_access_token(open(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\app\mapbox_token.txt").read())
+# df = px.data.carshare()
+# fig = px.scatter_mapbox(arrets_ligne, lat="lat", lon="lon",     color="ligne",
+#                          color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, zoom=10)
+# #fig.show()
+# #map_filtered_test.to_excel("map_filtered_test.xlsx")
+#
+#
+# app = dash.Dash()
+# app.layout = html.Div(
+#
+#     className='DD_div',
+#     children=[
+#
+#         dcc.Dropdown(
+#         id='DD_name_ligne_input',
+#         options=
+#         [dict(label=x, value=x)
+#          for x in arrets_ligne["ligne"].unique()],
+#             placeholder="Selectionnez une station"),
+#
+#         dcc.Dropdown( #Dropdown station
+#         id='DD_name_station_input',
+#         options=
+#         [dict(label=x, value=x)
+#          for x in arrets_ligne["nom"].unique()],
+#         placeholder="Selectionnez une station"),
+#
+#         html.Div([dcc.Graph(id="map_output1")])
+#
+#
+#          #[dcc.Graph(id="map_output")]
+#     ]
+#
+# )
+#
+#
+#
+# @app.callback(
+#     Output('map_output1', 'figure'),
+#
+#     Input('DD_name_ligne_input',"value")
+#     #Input('DD_name_station_input',"value")
+# )
+# def update_graph(DD_name_ligne_input):
+#         px.set_mapbox_access_token(open(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\app\mapbox_token.txt").read())
+#         df =  arrets_ligne.copy()
+#
+#         if not DD_name_ligne_input :
+#             fig = px.scatter_mapbox(df, lat="lat", lon="lon",     color="ligne",
+#                                     color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, zoom=10)
+#             return fig
+#         else :
+#             df =  arrets_ligne[arrets_ligne.ligne == DD_name_ligne_input]
+#             fig = px.scatter_mapbox(df, lat="lat", lon="lon",     color="ligne",
+#                                     color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, zoom=10)
+#             return fig
+#
+#
+#
+#
+# app.run_server(debug=True, use_reloader=True, port=8053)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+#
+#
 
 """
 ID commun

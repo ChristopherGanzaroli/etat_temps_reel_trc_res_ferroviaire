@@ -1,4 +1,4 @@
-#bin/basch
+#!/bin/bash
 .\venv\Scripts\activate
 source ./venv/Scripts/activate
 

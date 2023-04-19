@@ -39,12 +39,15 @@ class NextPass :
         l = []
         for i in range(len(next_pass_info[list(next_pass_info.keys())[0]]["ServiceDelivery"]["StopMonitoringDelivery"][0]["MonitoredStopVisit"])) :
             api_info_filtered = next_pass_info[list(next_pass_info.keys())[0]]["ServiceDelivery"]["StopMonitoringDelivery"][0]["MonitoredStopVisit"][i]["MonitoredVehicleJourney"]["MonitoredCall"]
-            l.append(api_info_filtered)
+            if api_info_filtered["VehicleAtStop"] ==True : # Pour éviter les "Nan" dans "ExpectedDepartureTime" (bloque la methode parse)
+                l.append(api_info_filtered)
 
         #api_info to pd.df
-        l2 = []
-        for i,j in enumerate(l) :
-            l2.append(j.values())
+        # l2 = []
+        # for i,j in enumerate(l) :
+        #     if j["VehicleAtStop"] == True :
+        #         print(j)
+        #         l2.append(j.values())
 
         df = pd.DataFrame(l, columns=['StopPointName', 'VehicleAtStop', 'DestinationDisplay', 'ExpectedArrivalTime', 'ExpectedDepartureTime', 'DepartureStatus', 'ArrivalStatus'])
 

@@ -78,8 +78,7 @@ app.layout = html.Div(style={'background-color': app_colors['background'],
                                                   html.Div(
                                                       className='DD_div',
                                                       children=[
-                                                          #html.Label(['Arrondissement'], style={'font-weight':'bold','font-size': '1rem', 'color':'white'}),
-                                                          dcc.Dropdown( #Dropdown dept
+                                                          dcc.Dropdown( #Dropdown line
                                                               id='DD_name_ligne_input',
                                                               options=
                                                               [dict(label=x, value=x)
@@ -91,7 +90,7 @@ app.layout = html.Div(style={'background-color': app_colors['background'],
                                                               }
 
                                                           ),
-                                                          dcc.Dropdown( #Dropdown adresse
+                                                          dcc.Dropdown( #Dropdown station
                                                               id='DD_name_station_input',
                                                               options=
                                                               [dict(label=x, value=x)
@@ -109,11 +108,16 @@ app.layout = html.Div(style={'background-color': app_colors['background'],
                                                   html.Div(
                                                       className='Info_div',
                                                       children=[
-                                                          html.H1("Info trafic"),
+                                                          html.H2("Info trafic",
+                                                                  style={
+                                                                      'textAlign': 'center',
+                                                                      'color': app_colors['text'],
+                                                                      'padding-bottom': '3.9%'
+                                                                  }),
+
                                                           dt.DataTable(
                                                               id='next_pass_table_output',
 
-                                                              #[df_tweets.to_dict('records'), [{'Date': i, 'User': i,'User': i}, for i in indf_tweets ],#[{'Date': i, 'User': i,'User': i}]
                                                               columns=[{'name': 'Destination', 'id': 'DestinationDisplay'},
                                                                        {'name': 'Prochain passage', 'id': 'ExpectedArrivalTime'},
                                                                        {'name': 'Depart', 'id': 'ExpectedDepartureTime'}],
@@ -158,7 +162,6 @@ app.layout = html.Div(style={'background-color': app_colors['background'],
                                                   dt.DataTable(
                                                       id='output_datatable',
 
-                                                      #[df_tweets.to_dict('records'), [{'Date': i, 'User': i,'User': i}, for i in indf_tweets ],#[{'Date': i, 'User': i,'User': i}]
                                                       columns=[{'name': 'Date', 'id': 'Date'},
                                                                #{'name': 'User', 'id': 'User'},
                                                                {'name': 'Tweet', 'id': 'Tweet'}],
@@ -264,24 +267,25 @@ app.layout = html.Div(style={'background-color': app_colors['background'],
     Input('DD_name_station_input',component_property="value")
 )
 def update_map_map(DD_name_ligne_input,DD_name_station_input) :
-    map_feltred = arrets_ligne.copy()
 
-    # if  not DD_dept_input :
-    #     raise PreventUpdate
-    # else :
+    map_feltred = arrets_ligne.copy()
     if DD_name_ligne_input :
-        map_feltred = map_feltred[map_feltred.ligne == DD_name_ligne_input]
+
+        map_feltred = arrets_ligne[arrets_ligne.ligne == DD_name_ligne_input]
+
         #print(DD_name_ligne_input, map_feltred.lat, map_feltred.lon)
 
 
 
-    elif DD_name_station_input:
-        map_feltred = map_feltred[(map_feltred.nom==DD_name_station_input)]
+
+
+    # elif DD_name_station_input:
+    #     map_feltred = map_feltred[(map_feltred.nom==DD_name_station_input)]
 
 
     ######################################## MAP ###############################################
     px.set_mapbox_access_token(open(r"\Users\ganza\OneDrive\Bureau\gitripo\twitter_kafka_elk_pipeline\app\mapbox_token.txt").read())
-    fig = px.scatter_mapbox(map_feltred, lat=map_feltred.lat, lon=map_feltred.lon,
+    fig = px.scatter_mapbox(map_feltred, lat='lat', lon='lon',
                             mapbox_style='carto-darkmatter',
                             hover_data=['ligne','nom'], color="ligne",
 
@@ -341,5 +345,5 @@ def get_tweet(DD_name_ligne_input):
 app.config.suppress_callback_exceptions = True
 
 #app.run_server(debug=True, use_reloader=True)
-app.run_server(debug=False, use_reloader=True, port=8053)
+app.run_server(debug=True, use_reloader=True, port=8053)
 
