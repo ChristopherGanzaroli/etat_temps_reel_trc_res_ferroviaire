@@ -21,6 +21,15 @@ body {
     font-family: "Open Sans";
 
 }
+<<<<<<< HEAD
+=======
+.h2 {
+    color : white !important;
+    padding-bottom: 40%;
+    font-family: "Open Sans";
+
+}
+>>>>>>> dev
 
 
 .all_compenents{
@@ -74,7 +83,11 @@ body {
     
 }
 #output_datatable{
+<<<<<<< HEAD
     padding-top:23%;
+=======
+    padding-top:5%;
+>>>>>>> dev
 
 }
 

@@ -20,4 +20,13 @@ https://prim.iledefrance-mobilites.fr/fr/donnees-dynamiques/idfm-ivtr-requete_un
 Référentiel des lignes de transport en commun d’île-de-France - lignes actives et prochainement actives
 https://data.iledefrance-mobilites.fr/explore/dataset/referentiel-des-lignes/export/?disjunctive.transportmode&disjunctive.transportsubmode&disjunctive.operatorname&disjunctive.networkname
 
+<<<<<<< HEAD
 
+=======
+line report  (ctrl f)
+https://doc.navitia.io/?ref=ile-de-france-mobilites#line-reports
+v2
+https://prim.iledefrance-mobilites.fr/fr/donnees-dynamiques/idfm-navitia-line_reports
+https://prim.iledefrance-mobilites.fr/marketplace/navitia/line_reports/coverage/fr-idf/line_reports?count=100
+(filtrer sur : "begin": "20230419 j-7  et export les données dans un csv ou json)
+>>>>>>> dev

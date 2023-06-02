@@ -1,3 +1,11 @@
+<<<<<<< HEAD
 /data/draft.txt
 /app/mapbox_token.txt
 test.py
+=======
+data/*.txt
+app/*.txt
+app/*.json
+tests
+.idea
+>>>>>>> dev

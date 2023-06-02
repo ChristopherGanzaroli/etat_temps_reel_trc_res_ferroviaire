@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #bin/basch
+=======
+#!/bin/bash
+>>>>>>> dev
 .\venv\Scripts\activate
 source ./venv/Scripts/activate
 

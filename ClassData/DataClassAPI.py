@@ -33,12 +33,21 @@ class GetDataAPI:
 ###################################################################################################
 
 
+<<<<<<< HEAD
     def next_pass(self):
         r = requests.get(self.url, headers=headers)
             #Affichage du code réponse
         #print('Status:',r)
         #Affichage du contenu de la réponse
         return json.loads(r.content)
+=======
+    # def next_pass(self):
+    #     r = requests.get(self.url, headers=headers)
+    #         #Affichage du code réponse
+    #     #print('Status:',r)
+    #     #Affichage du contenu de la réponse
+    #     return json.loads(r.content)
+>>>>>>> dev
 
 
 
@@ -52,7 +61,12 @@ class GetDataFile :
 
     def json_input(self):
         with open(self.path, "r") as f :
+<<<<<<< HEAD
             return json.loads(f.read())
+=======
+            #return json.loads(f.read())
+            return json.loads(json.dumps(json.loads(f.read()), ensure_ascii=False)) #correction mauvais encordage du fichier
+>>>>>>> dev
     def iter_(self, key):
         self.json_input()
         return [i[key] for i in self.json_input().iteritems()]

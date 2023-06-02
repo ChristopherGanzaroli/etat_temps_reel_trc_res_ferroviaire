@@ -18,8 +18,15 @@ class GetTweet :
         elif ("RER C") or ("RER D") in self.ligne :
             user_name = self.ligne.replace(f"RER {self.ligne[4]}",f"RER{self.ligne[4]}_SNCF")
 
+<<<<<<< HEAD
         elif "METRO" in self.ligne :
             user_name = self.ligne.replace(f"METRO {self.ligne[6]}",f"Ligne{self.ligne[6]}_RATP")
+=======
+        if "METRO" in self.ligne :
+
+            user_name = self.ligne.replace(f"METRO {self.ligne[6]}",f"Ligne{self.ligne[6]}_RATP")
+            print(self.ligne,user_name)
+>>>>>>> dev
 
         if  self.ligne in ["TRAIN L", "TRAIN P", "TRAIN H","TRAIN R","TRAIN J", "TRAIN K"]  :
             user_name = self.ligne.replace(f"TRAIN {self.ligne[6]}",f"Ligne{self.ligne[6]}_SNCF")
