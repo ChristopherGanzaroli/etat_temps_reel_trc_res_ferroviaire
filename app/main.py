@@ -28,18 +28,18 @@ app_colors = {
 }
 
 
-# fig_hist.update_layout(
-#     plot_bgcolor=app_colors['background'],
-#     paper_bgcolor=app_colors['background'],
-#     font_color=app_colors['text'],
-#     margin={"r":0,"t":0,"l":0}
-# )
-# fig_hist.update_layout(
-#     plot_bgcolor=app_colors['background'],
-#     paper_bgcolor=app_colors['background'],
-#     font_color=app_colors['text'],
-#     margin={"r":0,"t":0,"l":0}
-# )
+fig_hist.update_layout(
+    plot_bgcolor=app_colors['background'],
+    paper_bgcolor=app_colors['background'],
+    font_color=app_colors['text'],
+    margin={"r":0,"t":0,"l":0}
+)
+fig_hist.update_layout(
+    plot_bgcolor=app_colors['background'],
+    paper_bgcolor=app_colors['background'],
+    font_color=app_colors['text'],
+    margin={"r":0,"t":0,"l":0}
+)
 
 
 
@@ -48,7 +48,7 @@ app_colors = {
 # APP
 ########################################################################################################################
 
-app.title = "Stations de recharge Paris"
+app.title = "Etat du trafic en temps réel en IDF"
 
 app.layout = html.Div(style={'background-color': app_colors['background'],
                              'paper_bgcolor' :app_colors['background'],
@@ -310,7 +310,7 @@ def update_map_map(DD_name_ligne_input,DD_name_station_input) :
     Input('DD_name_ligne_input',"value")
 )
 
-def get_tweet(DD_name_station_input,DD_name_ligne_input):
+def next_pass(DD_name_station_input,DD_name_ligne_input):
 
     if DD_name_station_input and DD_name_ligne_input:
 
@@ -345,5 +345,5 @@ def get_tweet(DD_name_ligne_input):
 app.config.suppress_callback_exceptions = True
 
 #app.run_server(debug=True, use_reloader=True)
-app.run_server(debug=True, use_reloader=True, port=8053)
+app.run_server(debug=False, use_reloader=True, port=8053)
 
